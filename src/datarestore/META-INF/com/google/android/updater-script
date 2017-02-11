@@ -1,0 +1,22 @@
+
+ui_print("BackItUp Utility Demo");
+ui_print("Powered by AnClark 2017");
+
+show_progress(0.300000, 0);
+
+ui_print("Preparing...");
+package_extract_file("datarestore.sh", "/cache/datarestore.sh");
+set_metadata("/cache/datarestore.sh", "uid", 0, "gid", 0, "mode", 0555, "capabilities", 0x0);
+
+show_progress(0.600000, 0);
+
+ui_print("Backing up your user app with data...");
+run_program("/cache/datarestore.sh");
+
+show_progress(0.900000, 0);
+
+ui_print("Cleaning up...");
+delete("/cache/datarestore.sh");
+
+
+set_progress(1.000000);
