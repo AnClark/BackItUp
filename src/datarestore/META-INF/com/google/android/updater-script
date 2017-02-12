@@ -1,6 +1,11 @@
 
-ui_print("BackItUp Utility Demo");
+ui_print("BackItUp Utility Demo --- Restore");
 ui_print("Powered by AnClark 2017");
+
+show_progress(0.100000, 0);
+ui_print("NOTICE: This update pack should only be used to restore data");
+ui_print("after a Wipe.");
+ui_print("Your existing app/data will be overwritten!");
 
 show_progress(0.300000, 0);
 
@@ -10,7 +15,7 @@ set_metadata("/cache/datarestore.sh", "uid", 0, "gid", 0, "mode", 0555, "capabil
 
 show_progress(0.600000, 0);
 
-ui_print("Backing up your user app with data...");
+ui_print("Restoring your app/data with the latest backup at /sdcard/_appbak...");
 run_program("/cache/datarestore.sh");
 
 show_progress(0.900000, 0);

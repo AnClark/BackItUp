@@ -10,16 +10,17 @@ mkdir ${bak_dir}
 ## Generate file list to copy
 rm -f ${filelist_file}
 
-# Generate app list first
+# Generate APK folder list first
 app_list=$(ls /data/app)
 
-echo "User app list is:"
+echo "Generating APK folder list..."
+echo "=========== USER APP LIST ==========="
 for appname in ${app_list};
 	do
 		echo "*** "${appname}
 		echo "/data/app/"${appname} >> ${filelist_file}
 	done
-
+echo "====================================="
 
 # Generate app data folder list
 echo "Generating app data list..."
