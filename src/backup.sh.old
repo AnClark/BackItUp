@@ -1,0 +1,55 @@
+#!/system/bin/sh
+
+internal_sd="/data/media/0"
+bak_dir=${internal_sd}/_appbak
+
+apk_list=${internal_sd}/_appbak/apklist.txt
+data_list=${internal_sd}/_appbak/datalist.txt
+
+apk_bak_name=apks.tar.gz
+data_bak_name=data.tar.bzip2
+
+rm -rf ${bak_dir}
+mkdir ${bak_dir}
+
+## Generate file list to copy
+rm -f ${apk_list}
+rm -f ${data_list}
+
+# Generate APK folder list first
+app_list=$(ls /data/app)
+
+echo "Parsing and generating APK folder list..."
+echo "=========== USER APP LIST ==========="
+for appname in ${app_list};
+	do
+		echo "*** "${appname}
+		echo "/data/app/"${appname} >> ${apk_list}
+	done
+echo "====================================="
+
+# Generate app data folder list
+echo "Parsing and generating app data list..."
+for appname2 in ${app_list};
+	do
+		# Rude API
+		# echo "/data/data/"$(echo ${appname2} | sed 's/-[0-9]*//g' | sed 's/.apk//g') >> ${data_list}
+		
+		# Android Official API
+		echo "/data/data/"$(pm list packages -3 | awk -F ':' '{print $NF}') >> ${data_list}
+	done
+			
+
+# Start compressing
+echo "Compressing your app packages..."
+tar -zcv -f ${bak_dir}/${apk_bak_name} -T ${apk_list} --exclude=lib --exclude=oat
+
+echo "Compressing your app data..."
+tar -jcv -f ${bak_dir}/${data_bak_name} -T ${data_list}
+
+
+
+
+
+		
+
